@@ -30,15 +30,16 @@ module KnifeVro
         config[key] || Chef::Config[:knife][key]
       end
 
-      def ssl_verify
+      def verify_ssl
         ! get_config_value(:vro_disable_ssl_verify)
       end
 
       def conn_config
         @conn_config ||= VcoWorkflows::Config.new(
-          url:      get_config_value(:vro_api_url),
-          username: get_config_value(:vro_username),
-          password: get_config_value(:vro_password)
+          url:        get_config_value(:vro_api_url),
+          username:   get_config_value(:vro_username),
+          password:   get_config_value(:vro_password),
+          verify_ssl: verify_ssl
         )
       end
 
