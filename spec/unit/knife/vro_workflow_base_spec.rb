@@ -53,35 +53,35 @@ describe KnifeVro::WorkflowBase do
     expect(@knife.get_config_value(:vro_username)).to eq(username_override)
   end
 
-  it '#verify_ssl SSL verification enabled by default' do
-    expect(@knife.verify_ssl).to eq(true)
+  it '#verify_ssl? SSL verification enabled by default' do
+    expect(@knife.verify_ssl?).to eq(true)
   end
 
-  it '#verify_ssl SSL verification can be disabled' do
+  it '#verify_ssl? SSL verification can be disabled' do
     @knife.config[:vro_disable_ssl_verify] = true
-    expect(@knife.verify_ssl).to eq(false)
+    expect(@knife.verify_ssl?).to eq(false)
   end
 
-  it '#verify_ssl SSL verification can be forced enabled' do
+  it '#verify_ssl? SSL verification can be forced enabled' do
     @knife.config[:vro_disable_ssl_verify] = false
-    expect(@knife.verify_ssl).to eq(true)
+    expect(@knife.verify_ssl?).to eq(true)
   end
 
-  it '#validate! does not raise an exception' do
-    expect { @knife.validate! }.not_to raise_error
+  it '#validate_required_config! does not raise an exception' do
+    expect { @knife.validate_required_config! }.not_to raise_error
   end
 
-  it '#validate! raises an exception if a required param is missing' do
+  it '#validate_required_config! raises an exception if a required param is missing' do
     Chef::Config[:knife][:vro_username] = nil
-    expect { @knife.validate! }.to raise_error
+    expect { @knife.validate_required_config! }.to raise_error
   end
 
-  it '#validate! allows validation of additional required params - params supplied' do
+  it '#validate_required_config! allows validation of additional required params - params supplied' do
     @knife.config[:another_param] = true
-    expect { @knife.validate!(:another_param) }.not_to raise_error
+    expect { @knife.validate_required_config!(:another_param) }.not_to raise_error
   end
 
-  it '#validate! allows validation of additional required params - params not supplied' do
-    expect { @knife.validate!(:another_param) }.to raise_error
+  it '#validate_required_config! allows validation of additional required params - params not supplied' do
+    expect { @knife.validate_required_config!(:another_param) }.to raise_error
   end
 end

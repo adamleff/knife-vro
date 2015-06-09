@@ -23,6 +23,13 @@ module KnifeVro
 
     banner 'knife vro workflow execute'
 
+    option :async, 
+      long:        '--async',
+      description: 'Perform the vRO workflow execution asynchronously - do not wait for output',
+      boolean:     true,
+      default:     false
+    end
+
     def run
     end
   end

@@ -48,7 +48,7 @@ module KnifeVro
         config[key] || Chef::Config[:knife][key]
       end
 
-      def verify_ssl
+      def verify_ssl?
         ! get_config_value(:vro_disable_ssl_verify)
       end
 
@@ -57,11 +57,15 @@ module KnifeVro
           url:        get_config_value(:vro_api_url),
           username:   get_config_value(:vro_username),
           password:   get_config_value(:vro_password),
-          verify_ssl: verify_ssl
+          verify_ssl: verify_ssl?
         )
       end
 
-      def validate!(additional_opts=[])
+      def workflow(opts={})
+        VcoWorkflows::Workflow.new(opts[:name], id: opts[:id])
+      end
+
+      def validate_required_config!(additional_opts=[])
         additional_opts = [additional_opts] unless additional_opts.is_a?(Array)
 
         required_opts = [ :vro_api_url, :vro_username, :vro_password ] + additional_opts
