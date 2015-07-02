@@ -28,7 +28,6 @@ module KnifeVro
       description: 'Perform the vRO workflow execution asynchronously - do not wait for output',
       boolean:     true,
       default:     false
-    end
 
     def run
     end
